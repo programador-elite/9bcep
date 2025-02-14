@@ -11,17 +11,20 @@
             background-color: #f0f0f0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Alinhamento flexível para o início */
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* Evita rolagem indesejada */
         }
         
         .calendar-container {
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            width: 600px;
-            padding: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Largura responsiva */
+            max-width: 700px; /* Largura máxima */
+            padding: 20px;
+            margin-top: 20px; /* Espaçamento superior */
         }
         
         h2 {
@@ -33,7 +36,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
         
         button {
@@ -44,6 +47,7 @@
             padding: 8px 12px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-size: 14px; /* Tamanho da fonte ajustado */
         }
         
         button:hover {
@@ -61,7 +65,7 @@
             border-radius: 5px;
             padding: 15px;
             text-align: center;
-            font-size: 16px;
+            font-size: 14px; /* Tamanho da fonte ajustado */
             cursor: pointer;
         }
         
@@ -80,98 +84,10 @@
         .aula-item {
             margin: 5px 0;
         }
-
-        .sidebar {
-            width: 250px;
-            height: 100vh; /* Estender até o fim da tela */
-            background-color: #333; /* Cor de fundo do menu */
-            color: #ffffff;
-            padding: 20px; /* Aumentando o padding */
-            transition: transform 0.3s ease; /* Transição suave */
-            position: fixed; /* Fixo na tela */
-            left: 0; /* Fixo à esquerda */
-            top: 0; /* Fixo ao topo */
-            z-index: 999; /* Para garantir que fique acima de outros elementos */
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra para a barra lateral */
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, serif;
-            font-size: large;
-            font-style: initial;
-        }
-        
-        .sidebar.hidden {
-            transform: translateX(-100%); /* Esconder o menu */
-        }
-        
-        .sidebar h2 {
-            text-align: center;
-            font-size : 1.8em; /* Tamanho da fonte do título */
-            margin-bottom: 20px; /* Espaçamento inferior */
-        }
-        
-        .sidebar ul {
-            list-style-type: none;
-        }
-        
-        .sidebar ul li {
-            margin: 15px 0;
-        }
-        
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 30px; /* Bordas arredondadas */
-            transition: background 0.3s, transform 0.3s; /* Transição suave para hover */
-        }
-        
-        .sidebar ul li a:hover {
-            background-color: #555; /* Cor de fundo ao passar o mouse */
-            transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
-        }
-        
-        /* Estilo do botão do menu */
-        #toggleMenu {
-            background-color: #333; /* Cor de fundo do botão */
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            width: 50px; /* Largura reduzida */
-            height: 50px; /* Altura reduzida */
-            text-align: center;
-            font-size: 24px; /* Tamanho do ícone */
-            position: fixed; /* Fixo na tela */
-            top: 10px; /* Distância do topo */
-            left: 10px; /* Distância da esquerda */
-            z-index: 1000; /* Para garantir que fique acima de outros elementos */
-            border-radius: 50%; /* Formato redondo */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para o botão */
-            transition: background 0.3s; /* Transição suave para hover */
-        }
-        
-        #toggleMenu:hover {
-            background-color: #444; /* Cor ao passar o mouse */
-        }
-        
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Cor de fundo da sobreposição */
-            display: none; /* Inicialmente escondido */
-            z-index: 998; /* Abaixo do menu */
-        }
-
-        .overlay.visible {
-            display: block; /* Mostra a sobreposição */
-        }
     </style>
 </head>
 <body>
     
-    <div class="overlay hidden"></div> <!-- Sobreposição para efeito de brilho -->
 
     <div class="calendar-container">
         <h2 id="weekTitle">Calendário Semanal</h2>
@@ -192,13 +108,13 @@
 
         // Defina suas matérias aqui para cada dia da semana
         const materiasPorDia = {
-             'Domingo': [""],
-            'Segunda-feira': ["GEOGRAFIA", "LÍNGUA PORTUGUESA", "HISTÓRIA", "LÍNGUA ESPANHOLA", "EDUCAÇÃO FÍSICA", "EDUCAÇÃO FÍSICA"],
-            'Terça-feira': ["MATEMÁTICA", "MATEMÁTICA", "ARTE", "ARTE", "LÍNGUA INGLESA", "CIÊNCIAS"],
-            'Quarta-feira': ["GEOGRAFIA", "CIÊNCIAS", "LÍNGUA PORTUGUESA", "GEOGRAFIA", "CIÊNCIAS", "MATEMÁTICA"],
-            'Quinta-feira': ["LÍNGUA INGLESA", "MATEMÁTICA", "MATEMÁTICA", "REC APREND MAT", "REC APREND MAT", "LÍNGUA ESPANHOLA"],
-            'Sexta-feira': ["MATEMÁTICA", "REC APREND LP", "HISTÓRIA", "REC APREND LP", "HISTÓRIA", "LÍNGUA PORTUGUESA"],
-            'Sábado': [""],
+            'Domingo': [""],
+            'Segunda-feira': ["História", "Geografia", "Literatura", "Inglês", "Filosofia", "Sociologia"],
+            'Terça-feira': ["Matemática", "Física", "Química", "Biologia", "Educação Física", "Artes"],
+            'Quarta-feira': ["História", "Geografia", "Literatura", "Inglês", "Filosofia", "S ociologia"],
+            'Quinta-feira': ["Matemática", "Física", "Química", "Biologia", "Educação Física", "Artes"],
+            'Sexta-feira': ["História", "Geografia", "Literatura", "Inglês", "Filosofia", "Sociologia"],
+            'Sábado': [""]
         };
 
         function gerarCalendarioSemanal() {
