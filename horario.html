@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário Semanal</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .calendar-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 700px;
+            padding: 20px;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .week-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        #calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr); /* 7 colunas para os dias da semana */
+            gap: 5px;
+        }
+        
+        .day {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .day:hover {
+            background-color: blue; /* Cor ao passar o mouse */
+            color: white; /* Texto branco ao passar o mouse */
+        }
+
+        .aulas {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+            display: none; /* Inicialmente escondido */
+        }
+
+        .aula-item {
+            margin: 5px 0;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh; /* Estender até o fim da tela */
+            background-color: #333; /* Cor de fundo do menu */
+            color: #ffffff;
+            padding: 20px; /* Aumentando o padding */
+            transition: transform 0.3s ease; /* Transição suave */
+            position: fixed; /* Fixo na tela */
+            left: 0; /* Fixo à esquerda */
+            top: 0; /* Fixo ao topo */
+            z-index: 999; /* Para garantir que fique acima de outros elementos */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra para a barra lateral */
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, serif;
+            font-size: large;
+            font-style: initial;
+        }
+        
+        .sidebar.hidden {
+            transform: translateX(-100%); /* Esconder o menu */
+        }
+        
+        .sidebar h2 {
+            text-align: center;
+            font-size : 1.8em; /* Tamanho da fonte do título */
+            margin-bottom: 20px; /* Espaçamento inferior */
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+        }
+        
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 30px; /* Bordas arredondadas */
+            transition: background 0.3s, transform 0.3s; /* Transição suave para hover */
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #555; /* Cor de fundo ao passar o mouse */
+            transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+        }
+        
+        /* Estilo do botão do menu */
+        #toggleMenu {
+            background-color: #333; /* Cor de fundo do botão */
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            width: 50px; /* Largura reduzida */
+            height: 50px; /* Altura reduzida */
+            text-align: center;
+            font-size: 24px; /* Tamanho do ícone */
+            position: fixed; /* Fixo na tela */
+            top: 10px; /* Distância do topo */
+            left: 10px; /* Distância da esquerda */
+            z-index: 1000; /* Para garantir que fique acima de outros elementos */
+            border-radius: 50%; /* Formato redondo */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para o botão */
+            transition: background 0.3s; /* Transição suave para hover */
+        }
+        
+        #toggleMenu:hover {
+            background-color: #444; /* Cor ao passar o mouse */
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Cor de fundo da sobreposição */
+            display: none; /* Inicialmente escondido */
+            z-index: 998; /* Abaixo do menu */
+        }
+
+        .overlay.visible {
+            display: block; /* Mostra a sobreposição */
+        }
+    </style>
+</head>
+<body>
+    <button id="toggleMenu">☰</button> <!-- Botão de três barrinhas para abrir o menu -->
+    <div class="sidebar hidden"> <!-- Adicionando a classe hidden inicialmente -->
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="calendar.html">Calendário</a></li>
+            <li><a href="horario.html">Horário</a></li>
+            <li><a href="livros.html">Livros</a></li>
+        </ul>
+    </div>
+    
+    <div class="overlay hidden"></div> <!-- Sobreposição para efeito de brilho -->
+
+    <div class="calendar-container">
+        <h2 id="weekTitle">Calendário Semanal</h2>
+        <div class="week-navigation">
+            <button id="prevWeek">Semana Anterior</button>
+            <button id="nextWeek">Próxima Semana</button>
+        </div>
+        <div id="calendar"></div>
+        <div id="aulasContainer" class="aulas">
+            <h3>Aulas do Dia:</h3>
+            <div id="aulasList"></div>
+        </div>
+    </div>
+
+    <script>
+        const diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+        let dataAtual = new Date();
+
+        // Defina suas matérias aqui para cada dia da semana
+        const materiasPorDia = {
+            'Domingo': [""],
+            'Segunda-feira': ["História", "Geografia", "Literatura", "Inglês", "Filosofia", "Sociologia"],
+            'Terça-feira': ["Matemática", "Física", "Química", "Biologia", "Educação Física", "Artes"],
+            'Quarta-feira': ["História", "Geografia", "Literatura", "Inglês", "Filosofia", "S ociologia"],
+            'Quinta-feira': ["Matemática", "Física", "Química", "Biologia", "Educação Física", "Artes"],
+            'Sexta-feira': ["História", "Geografia", "Literatura", "Inglês", "Filosofia", "Sociologia"],
+            'Sábado': [""]
+        };
+
+        function gerarCalendarioSemanal() {
+            const calendarDiv = document.getElementById('calendar');
+            calendarDiv.innerHTML = ''; // Limpa o calendário anterior
+
+            const primeiroDiaDaSemana = new Date(dataAtual);
+            primeiroDiaDaSemana.setDate(dataAtual.getDate() - dataAtual.getDay()); // Ajusta para o domingo da semana atual
+
+            document.getElementById('weekTitle').innerText = `${primeiroDiaDaSemana.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}`;
+
+            diasDaSemana.forEach((dia) => {
+                const diaElemento = document.createElement('div');
+                diaElemento.classList.add('day');
+                diaElemento.innerText = dia + ' ' + primeiroDiaDaSemana.getDate();
+
+                // Adiciona evento de clique para mostrar aulas
+                diaElemento.addEventListener('click', () => {
+                    mostrarAulas(dia, primeiroDiaDaSemana);
+                });
+
+                calendarDiv.appendChild(diaElemento);
+                primeiroDiaDaSemana.setDate(primeiroDiaDaSemana.getDate() + 1); // Avança para o próximo dia
+            });
+        }
+
+        function gerarAulas(dia) {
+            const aulas = [];
+            const horaInicio = new Date();
+            horaInicio.setHours(13, 0, 0); // Início às 13h
+            const materias = materiasPorDia[dia] || [];
+
+            for (let i = 0; i < materias.length; i++) {
+                aulas.push(`${horaInicio.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${materias[i]}`);
+                horaInicio.setMinutes(horaInicio.getMinutes() + 50); // Adiciona 50 minutos
+                if (i === 2) {
+                    horaInicio.setMinutes(horaInicio.getMinutes() + 20); // Adiciona 20 minutos de intervalo após a 3ª aula
+                }
+            }
+            return aulas;
+        }
+
+        function mostrarAulas(dia, data) {
+            const aulasList = document.getElementById('aulasList');
+            aulasList.innerHTML = ''; // Limpa a lista anterior
+            const aulas = gerarAulas(dia);
+            aulas.forEach(aula => {
+                const aulaItem = document.createElement('div');
+                aulaItem.classList.add('aula-item');
+                aulaItem.innerText = aula;
+                aulasList.appendChild(aulaItem);
+            });
+            document.getElementById('aulasContainer').style.display = 'block'; // Mostra a área de aulas
+        }
+
+        document.getElementById('prevWeek').addEventListener('click', () => {
+            dataAtual.setDate(dataAtual.getDate() - 7);
+            gerarCalendarioSemanal();
+        });
+
+        document.getElementById('nextWeek').addEventListener('click', () => {
+            dataAtual.setDate(dataAtual.getDate() + 7);
+            gerarCalendarioSemanal();
+        });
+
+        gerarCalendarioSemanal(); // Gera o calendário ao carregar a página
+
+        document.getElementById("toggleMenu").addEventListener("click", function() {
+            var sidebar = document.querySelector(".sidebar");
+            var overlay = document.querySelector(".overlay"); // Seleciona a sobreposição
+            sidebar.classList.toggle("hidden");
+            overlay.classList.toggle("visible"); // Adiciona ou remove a classe visible
+        });
+        
+        // Fecha o menu e a sobreposição ao clicar na sobreposição
+        document.querySelector(".overlay").addEventListener("click", function() {
+            var sidebar = document.querySelector(".sidebar");
+            var overlay = document.querySelector(".overlay");
+            sidebar.classList.add("hidden");
+            overlay.classList.remove("visible"); // Remove a classe visible
+        });
+    </script>
+</body>
+</html>

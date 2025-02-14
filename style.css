@@ -1,0 +1,201 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container, .calendar-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.month-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.day {
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.2em;
+    transition: background-color 0.3s;
+}
+
+.day:hover {
+    background-color: #d1d1d1;
+}
+
+.empty {
+    background-color: transparent;
+}
+
+.weekdays {
+    display: contents;
+}
+
+.weekdays .day {
+    font-weight: bold;
+    color: #495057;
+    font-size: 1.1em;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.weekdays .day:hover {
+    background-color: #e2e6ea;
+}
+
+.month-navigation h3 {
+    flex-grow: 1;
+    font-size: 1.5em;
+    color: #333;
+}
+/* Estilo da barra lateral */
+.sidebar {
+    width: 250px;
+    height: 100vh; /* Estender até o fim da tela */
+    background-color: #333; /* Cor de fundo do menu */
+    color: #ffffff;
+    padding: 20px; /* Aumentando o padding */
+    transition: transform 0.3s ease; /* Transição suave */
+    position: fixed; /* Fixo na tela */
+    left: 0; /* Fixo à esquerda */
+    top: 0; /* Fixo ao topo */
+    z-index: 999; /* Para garantir que fique acima de outros elementos */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra para a barra lateral */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, serif;
+    font-size: large;
+    font-style: initial;
+}
+
+.sidebar.hidden {
+    transform: translateX(-100%); /* Esconder o menu */
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 1.8em; /* Tamanho da fonte do título */
+    margin-bottom: 20px; /* Espaçamento inferior */
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 30px; /* Bordas arredondadas */
+    transition: background 0.3s, transform 0.3s; /* Transição suave para hover */
+}
+
+.sidebar ul li a:hover {
+    background-color: #555; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+}
+
+/* Estilo do botão do menu */
+#toggleMenu {
+    background-color: #333; /* Cor de fundo do botão */
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    width: 50px; /* Largura reduzida */
+    height: 50px; /* Altura reduzida */
+    text-align: center;
+    font-size: 24px; /* Tamanho do ícone */
+    position: fixed; /* Fixo na tela */
+    top: 10px; /* Distância do topo */
+    left: 10px; /* Distância da esquerda */
+    z-index: 1000; /* Para garantir que fique acima de outros elementos */
+    border-radius: 50%; /* Formato redondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para o botão */
+    transition: background 0.3s; /* Transição suave para hover */
+}
+
+#toggleMenu:hover {
+    background-color: #444; /* Cor ao passar o mouse */
+}
+
+#botaoInvisivel {
+    background-color: #333; /* Cor de fundo do botão */
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: inline-block;
+    width: 50px; /* Largura reduzida */
+    height: 50px; /* Altura reduzida */
+    text-align: center;
+    font-size: 24px; /* Tamanho do ícone */
+    position: fixed; /* Fixo na tela */
+    top: 10px; /* Distância do topo */
+    left: 70px; /* Distância da esquerda */
+    z-index: 1000; /* Para garantir que fique acima de outros elementos */
+    border-radius: 50%; /* Formato redondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para o botão */
+    transition: background 0.3s; /* Transição suave para hover */
+}

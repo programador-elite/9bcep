@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Biblioteca de Livros</title>
+    <style>
+        .sidebar {
+            width: 250px;
+            height: 100vh; /* Estender até o fim da tela */
+            background-color: #333; /* Cor de fundo do menu */
+            color: #ffffff;
+            padding: 20px; /* Aumentando o padding */
+            transition: transform 0.3s ease; /* Transição suave */
+            position: fixed; /* Fixo na tela */
+            left: 0; /* Fixo à esquerda */
+            top: 0; /* Fixo ao topo */
+            z-index: 999; /* Para garantir que fique acima de outros elementos */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra para a barra lateral */
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, serif;
+            font-size: large;
+            font-style: initial;
+        }
+        
+        .sidebar.hidden {
+            transform: translateX(-100%); /* Esconder o menu */
+        }
+        
+        .sidebar h2 {
+            text-align: center;
+            font-size: 1.8em; /* Tamanho da fonte do título */
+            margin-bottom: 20px; /* Espaçamento inferior */
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+        }
+        
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+        
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 30px; /* Bordas arredondadas */
+            transition: background 0.3s, transform 0.3s; /* Transição suave para hover */
+        }
+        
+        .sidebar ul li a:hover {
+            background-color: #555; /* Cor de fundo ao passar o mouse */
+            transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+        }
+        
+        /* Estilo do botão do menu */
+        #toggleMenu {
+            background-color: #333; /* Cor de fundo do botão */
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            width: 50px; /* Largura reduzida */
+            height: 50px; /* Altura reduzida */
+            text-align: center;
+            font-size: 24px; /* Tamanho do ícone */
+            position: fixed; /* Fixo na tela */
+            top: 10px; /* Distância do topo */
+            left: 10px; /* Distância da esquerda */
+            z-index: 1000; /* Para garantir que fique acima de outros elementos */
+            border-radius: 50%; /* Formato redondo */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para o botão */
+            transition: background 0.3s; /* Transição suave para hover */
+        }
+        
+        #toggleMenu:hover {
+            background-color: #444; /* Cor ao passar o mouse */
+        }
+        
+        #botaoInvisivel {
+            background-color: #333; /* Cor de fundo do botão */
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            display: inline-block;
+            width: 50px; /* Largura reduzida */
+            height: 50px; /* Altura reduzida */
+            text-align: center;
+            font-size: 24px; /* Tamanho do ícone */
+            position: fixed; /* Fixo na tela */
+            top: 10px; /* Distância do topo */
+            left: 70px; /* Distância da esquerda */
+            z-index: 1000; /* Para garantir que fique acima de outros elementos */
+            border-radius: 50%; /* Formato redondo */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra para o botão */
+            transition: background 0.3s; /* Transição suave para hover */
+        }
+        /* styles.css */
+
+/* styles.css */
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centraliza verticalmente */
+    flex-direction: column;
+    height: 100vh; /* Faz o corpo ocupar toda a altura da tela */
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    text-align: center; /* Centraliza o texto dentro do container */
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.book {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+
+.book:hover {
+    transform: scale(1.02);
+}
+
+.book-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin: 10px 0;
+    color: #333;
+}
+
+p {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.download-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .book {
+        padding: 10px;
+    }
+
+    .download-button {
+        padding: 8px 12px;
+    }
+}
+    </style>
+</head>
+<body>
+    <button id="toggleMenu">☰</button> <!-- Botão de três barrinhas para abrir o menu -->
+    <div class="sidebar hidden"> <!-- Adicionando a classe hidden inicialmente -->
+        <h2>Menu</h2>
+         <ul>
+            <li><a href="calendar.html">Calendário</a></li>
+            <li><a href="horario.html">Horário</a></li>
+            <li><a href="livros.html">Livros</a></li>
+        </ul>
+    </div>
+    
+    <div class="overlay hidden"></div> <!-- Sobreposição para efeito de brilho -->
+
+
+    <div class="container">
+        <h1>Biblioteca de Livros</h1>
+
+        <div class="book">
+            <img src="caminho/para/imagem-do-livro1.jpg" alt="Título do Livro 1" class="book-image">
+            <h2>Título do Livro 1</h2>
+            <p>Descrição breve do Livro 1. Este livro fala sobre...</p>
+            <a href="caminho/para/livro1.pdf" class="download-button" download>Baixar PDF</a>
+        </div>
+
+        <div class="book">
+            <img src="caminho/para/imagem-do-livro2.jpg" alt="Título do Livro 2" class="book-image">
+            <h2>Título do Livro 2</h2>
+            <p>Descrição breve do Livro 2. Este livro aborda...</p>
+            <a href="caminho/para/livro2.pdf" class="download-button" download>Baixar PDF</a>
+        </div>
+
+        <!-- Adicione mais livros aqui seguindo a mesma estrutura -->
+        
+    </div>
+    <script>
+        document.getElementById("toggleMenu").addEventListener("click", function() {
+            var sidebar = document.querySelector(".sidebar");
+            var overlay = document.querySelector(".overlay"); // Seleciona a sobreposição
+            sidebar.classList.toggle("hidden");
+            overlay.classList.toggle("visible"); // Adiciona ou remove a classe visible
+        });
+        
+        // Fecha o menu e a sobreposição ao clicar na sobreposição
+        document.querySelector(".overlay").addEventListener("click", function() {
+            var sidebar = document.querySelector(".sidebar");
+            var overlay = document.querySelector(".overlay");
+            sidebar.classList.add("hidden");
+            overlay.classList.remove("visible"); // Remove a classe visible
+        });
+    </script>
+</body>
+</html>
