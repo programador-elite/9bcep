@@ -96,76 +96,62 @@
             border-radius: 5px;
             padding: 10px;
             margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #333;
-            color: #ffffff;
-            padding: 20px;
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 999;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, serif;
-            font-size: large;
-            transition: transform 0.3s ease;
-        }
-        
-        .sidebar.hidden {
-            transform: translateX(-100%);
-        }
-        
-        .sidebar h2 {
-            text-align: center;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-        }
-        
-        .sidebar ul {
-            list-style-type: none;
-        }
-        
-        .sidebar ul li {
-            margin: 15px 0;
-        }
-        
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 30px;
-            transition: background 0.3s, transform 0.3s;
-        }
-        
-        .sidebar ul li a:hover {
-            background-color: #555;
-            transform: scale(1.05);
-        }
-        
-        #toggleMenu {
-            background-color: #333;
+        .delete-btn {
+            background-color: #dc3545;
             color: white;
             border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
             cursor: pointer;
-            padding: 10px;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 24px;
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Modal de confirmação */
+        .confirmation-modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.5); 
         }
         
-        #toggleMenu:hover {
-            background-color: #444;
+        .confirmation-modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+            text-align: center;
+        }
+
+        .confirmation-modal button {
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .confirm-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: #dc3545;
+            color: white;
         }
 
         /* Estilo do formulário de eventos */
@@ -193,20 +179,40 @@
             background-color: #218838;
         }
 
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
+        /* Modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed; 
+            z-index: 1; 
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none; /* Oculto por padrão */
-            z-index: 998; /* Abaixo da barra lateral */
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
         }
-
-        .overlay.visible {
-            display: block; /* Exibe quando necessário */
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -221,21 +227,39 @@
         <div id="calendar"></div>
         <ul id="eventList"></ul>
         
-        <form id="eventForm">
-            <input type="text" id="eventDescription" placeholder="Descrição do evento" required>
-            <label for="eventDate">Data:</label>
-            <input type="date" id="eventDate" required>
-            <label for="startTime">Hora de Início:</label>
-            <input type="time" id="startTime">
-            <label for="endTime">Hora de Fim:</label>
-            <input type="time" id="endTime">
-            <label>
-                <input type="checkbox" id="allDay"> Dia Todo
-            </label>
-            <button type="submit">Salvar Evento</button>
-        </form>
+        <button id="createEventBtn">Criar Evento</button>
+
+        <div id="createEventModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Criar Evento</h2>
+                <form id="eventForm">
+                    <label for="eventName">Nome do Evento:</label>
+                    <input type="text" id="eventName" required>
+
+                    <label for="eventDate">Data do Evento:</label>
+                    <input type="date" id="eventDate" required>
+
+                    <label for="startTime">Hora de Início:</label>
+                    <input type="time" id="startTime" required>
+
+                    <label for="endTime">Hora de Fim:</label>
+                    <input type="time" id="endTime" required>
+
+                    <button type="submit">Salvar Evento</button>
+                </form>
+            </div>
+        </div>
     </div>
-    
+
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="confirmation-modal-content">
+            <p>Você tem certeza que deseja excluir este evento?</p>
+            <button class="confirm-btn" id="confirmDelete">Confirmar</button>
+            <button class="cancel-btn" id="cancelDelete">Cancelar</button>
+        </div>
+    </div>
+
     <script>
         const months = [
             "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -248,13 +272,12 @@
         // Carregar eventos do localStorage
         let eventos = JSON.parse(localStorage.getItem('eventos')) || [];
 
-        // Função para abrir o calendário no dia atual
         function abrirCalendarioNoDiaAtual() {
             const dataAtual = new Date();
-            currentMonth = dataAtual.getMonth(); // Mês atual
-            const diaAtual = dataAtual.getDate(); // Dia atual
+            currentMonth = dataAtual.getMonth();
+            const diaAtual = dataAtual.getDate();
             generateCalendar(currentMonth);
-            mostrarEventos(diaAtual); // Mostrar eventos do dia atual
+            mostrarEventos(diaAtual);
         }
 
         function generateCalendar(month) {
@@ -300,9 +323,19 @@
             diaElementoSelecionado.classList.add('selected');
 
             if (eventosDoDia.length > 0) {
-                eventosDoDia.forEach(evento => {
+                eventosDoDia.forEach((evento, index) => {
                     const li = document.createElement('li');
-                    li.textContent = evento.descricao;
+                    li.textContent = `${evento.nome} - ${evento.startTime} a ${evento.endTime}`;
+
+                    // Botão de exclusão
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Excluir';
+                    deleteButton.className = 'delete-btn';
+                    deleteButton.onclick = () => {
+                        showConfirmationModal(index, dia); // Chama a função para mostrar o modal de confirmação
+                    };
+
+                    li.appendChild(deleteButton);
                     listaEventos.appendChild(li);
                 });
             } else {
@@ -312,25 +345,43 @@
             }
         }
 
+        // Função para mostrar o modal de confirmação
+        function showConfirmationModal(eventIndex, dia) {
+            const confirmationModal = document.getElementById("confirmationModal");
+            confirmationModal.style.display = "block";
+
+            // Botão de confirmação
+            document.getElementById("confirmDelete").onclick = function() {
+                eventos.splice(eventIndex, 1); // Remove o evento do array
+                localStorage.setItem('eventos', JSON.stringify(eventos)); // Atualiza o localStorage
+                mostrarEventos(dia); // Atualiza a lista de eventos
+                confirmationModal.style.display = "none"; // Fecha o modal de confirmação
+            };
+
+            // Botão de cancelamento
+            document.getElementById("cancelDelete").onclick = function() {
+                confirmationModal.style.display = "none"; // Fecha o modal de confirmação
+            };
+        }
+
         document.getElementById('eventForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const descricao = document.getElementById('eventDescription').value;
+            const nome = document.getElementById('eventName').value;
             const dataSelecionada = document.getElementById('eventDate').value;
             const startTime = document.getElementById('startTime').value;
             const endTime = document.getElementById('endTime').value;
-            const allDay = document.getElementById('allDay').checked;
 
             if (dataSelecionada) {
                 eventos.push({ 
                     data: dataSelecionada, 
-                    descricao, 
+                    nome, 
                     startTime, 
-                    endTime, 
-                    allDay 
+                    endTime 
                 });
                 localStorage.setItem('eventos', JSON.stringify(eventos));
                 mostrarEventos(new Date(dataSelecionada).getDate()); // Mostrar eventos do dia selecionado
                 document.getElementById('eventForm').reset(); // Limpa o formulário
+                modal.style.display = "none"; // Fecha o modal
             } else {
                 alert('Selecione uma data para adicionar o evento.');
             }
@@ -346,22 +397,25 @@
             generateCalendar(currentMonth);
         });
 
-        // Chama a função para abrir o calendário no dia atual
         abrirCalendarioNoDiaAtual();
 
-        document.getElementById("toggleMenu").addEventListener("click", function() {
-            var sidebar = document.querySelector(".sidebar");
-            var overlay = document.querySelector(".overlay");
-            sidebar.classList.toggle("hidden");
-            overlay.classList.toggle("visible");
-        });
-        
-        document.querySelector(".overlay").addEventListener("click", function() {
-            var sidebar = document.querySelector(".sidebar");
-            var overlay = document.querySelector(".overlay");
-            sidebar.classList.add("hidden");
-            overlay.classList.remove("visible");
-        });
+        var modal = document.getElementById("createEventModal");
+        var btn = document.getElementById("createEventBtn");
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>
