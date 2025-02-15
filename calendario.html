@@ -272,6 +272,18 @@
         // Carregar eventos do localStorage
         let eventos = JSON.parse(localStorage.getItem('eventos')) || [];
 
+        function requestNotificationPermission() {
+            if (Notification.permission === "default") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        console.log("Permissão para notificações concedida.");
+                    } else {
+                        console.log("Permissão para notificações negada.");
+                    }
+                });
+            }
+        }
+
         function abrirCalendarioNoDiaAtual() {
             const dataAtual = new Date();
             currentMonth = dataAtual.getMonth();
@@ -382,10 +394,28 @@
                 mostrarEventos(new Date(dataSelecionada).getDate()); // Mostrar eventos do dia selecionado
                 document.getElementById('eventForm').reset(); // Limpa o formulário
                 modal.style.display = "none"; // Fecha o modal
+
+                // Agendar notificação
+                scheduleNotification({ nome, data: dataSelecionada, startTime });
             } else {
                 alert('Selecione uma data para adicionar o evento.');
             }
         });
+
+        function scheduleNotification(evento) {
+            const eventDateTime = new Date(`${evento.data}T${evento.startTime}`);
+            const now = new Date();
+            const timeToEvent = eventDateTime - now;
+
+            if (timeToEvent > 0) {
+                setTimeout(() => {
+                    new Notification("Lembrete de Evento", {
+                        body: `O evento "${evento.nome}" começa agora!`,
+                        icon: 'path/to/icon.png' // Substitua pelo caminho do ícone, se necessário
+                    });
+                }, timeToEvent);
+            }
+        }
 
         document.getElementById('prevMonth').addEventListener('click', () => {
             currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
