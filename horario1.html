@@ -69,13 +69,13 @@
         .day {
             background-color: #e0e0e0; /* Cor de fundo mais suave */
             border-radius: 10px; /* Bordas mais arredondadas */
-            padding: 10px; /* Padding reduzido */
+            padding: 13px; /* Padding reduzido */
             text-align: center;
             font-size: 12px; /* Tamanho da fonte ajustado */
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Sombra mais suave */
-            width: 40px; /* Largura fixa para os dias */
+            width: 60px; /* Largura fixa para os dias */
         }
         
         .day:hover {
@@ -92,7 +92,7 @@
 
         .aula-item {
             margin: 5px 0; /* Margem aumentada */
-            padding: 10px; /* Padding aumentado */
+            padding: 16px; /* Padding aumentado */
             background-color: #f1f1f1; /* Cor de fundo suave */
             border-radius: 8px; /* Bordas arredondadas */
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Sombra suave */
@@ -119,17 +119,15 @@
     </div>
 
     <script>
-        const diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+        const diasDaSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'];
         let dataAtual = new Date();
 
         const materiasPorDia = {
-            'Domingo': [""],
             'Segunda': ["Português", "História", "Português", "Rec. Matemática", "Rec. Matemática", "Espanhol"],
             'Terça': ["Matemática", "Português", "Arte", "Arte", "Inglês", "Ciências"],
             'Quarta': ["História", "Rec. Português", "Geografia", "Mateática", "Geográfia", "Inglês"],
             'Quinta': ["Geográfia", "Espanhol", "Ciências", "Ciências", "Matemática", "Matemática"],
             'Sexta': ["História", "Educação Fisíca", "Educação Fisíca", "Matemática", "Matemática", "Rec. Português"],
-            'Sábado': [""],
         };
 
         function gerarCalendarioSemanal() {
