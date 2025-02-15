@@ -1,6 +1,9 @@
 const CACHE_NAME = 'login-cache-v1';
 const urlsToCache = [
     'index.html',
+    'horario1.html',
+    'calendario.html',
+    'livros.html',
     'styles.css',
     'script.js',
     'icon-192x192.png',
