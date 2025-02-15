@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
     <title>Calendário Semanal</title>
-
-   <style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f0f0f0;
             display: flex;
             justify-content: center;
@@ -19,18 +18,20 @@
         }
         
         .calendar-container {
-            background-color: #fff;
+            background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             width: 90%; /* Largura responsiva */
-            max-width: 500px; /* Largura máxima reduzida */
-            padding: 15px; /* Padding reduzido */
+            max-width: 450px; /* Largura máxima reduzida */
+            padding: 20px; /* Padding aumentado */
             margin-top: 20px;
+            transition: transform 0.3s;
         }
-        
+
         h2 {
             text-align: center;
             margin-bottom: 15px; /* Margem reduzida */
+            color: #007bff; /* Cor do título */
         }
         
         .week-navigation {
@@ -44,36 +45,41 @@
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 5px;
-            padding: 6px 10px; /* Padding reduzido */
+            border-radius: 8px; /* Bordas mais arredondadas */
+            padding: 8px; /* Padding aumentado */
             cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 12px; /* Tamanho da fonte ajustado */
+            transition: background-color 0.3s, transform 0.2s;
+            font-size: 14px; /* Tamanho da fonte ajustado */
             width: 100%; /* Botões ocupam toda a largura */
             margin: 5px 0; /* Espaçamento entre os botões */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
         }
         
         button:hover {
             background-color: #0056b3;
+            transform: translateY(-2px); /* Efeito de elevação ao passar o mouse */
         }
         
         #calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr); /* 7 colunas para os dias da semana */
-            gap: 3px; /* Espaçamento reduzido */
+            gap: 5px; /* Espaçamento reduzido */
         }
         
         .day {
-            background-color: #e9ecef;
-            border-radius: 5px;
-            padding: 8px; /* Padding reduzido */
+            background-color: #e0e0e0; /* Cor de fundo mais suave */
+            border-radius: 10px; /* Bordas mais arredondadas */
+            padding: 10px; /* Padding reduzido */
             text-align: center;
-            font-size: 10px; /* Tamanho da fonte ajustado */
+            font-size: 12px; /* Tamanho da fonte ajustado */
             cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Sombra mais suave */
+            width: 40px; /* Largura fixa para os dias */
         }
         
         .day:hover {
-            background-color: blue; /* Cor ao passar o mouse */
+            background-color: #007bff; /* Cor ao passar o mouse */
             color: white; /* Texto branco ao passar o mouse */
         }
 
@@ -85,13 +91,20 @@
         }
 
         .aula-item {
-            margin: 3px 0; /* Margem reduzida */
+            margin: 5px 0; /* Margem aumentada */
+            padding: 10px; /* Padding aumentado */
+            background-color: #f1f1f1; /* Cor de fundo suave */
+            border-radius: 8px; /* Bordas arredondadas */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        /* Estilo específico para o mês de fevereiro */
+        .february {
+            color: black; /* Cor do texto em preto */
         }
     </style>
 </head>
 <body>
-    
-
     <div class="calendar-container">
         <h2 id="weekTitle">Calendário Semanal</h2>
         <div class="week-navigation">
@@ -106,26 +119,25 @@
     </div>
 
     <script>
-        const diasDaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+        const diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
         let dataAtual = new Date();
 
-        // Defina suas matérias aqui para cada dia da semana
         const materiasPorDia = {
-           'Domingo': [""],
-            'Segunda-feira': ["GEOGRAFIA", "LÍNGUA PORTUGUESA", "HISTÓRIA", "LÍNGUA ESPANHOLA", "EDUCAÇÃO FÍSICA", "EDUCAÇÃO FÍSICA"],
-            'Terça-feira': ["MATEMÁTICA", "MATEMÁTICA", "ARTE", "ARTE", "LÍNGUA INGLESA", "CIÊNCIAS"],
-            'Quarta-feira': ["GEOGRAFIA", "CIÊNCIAS", "LÍNGUA PORTUGUESA", "GEOGRAFIA", "CIÊNCIAS", "MATEMÁTICA"],
-            'Quinta-feira': ["LÍNGUA INGLESA", "MATEMÁTICA", "MATEMÁTICA", "REC APREND MAT", "REC APREND MAT", "LÍNGUA ESPANHOLA"],
-            'Sexta-feira': ["MATEMÁTICA", "REC APREND LP", "HISTÓRIA", "REC APREND LP", "HISTÓRIA", "LÍNGUA PORTUGUESA"],
+            'Domingo': [""],
+            'Segunda': ["Português", "História", "Português", "Rec. Matemática", "Rec. Matemática", "Espanhol"],
+            'Terça': ["Matemática", "Português", "Arte", "Arte", "Inglês", "Ciências"],
+            'Quarta': ["História", "Rec. Português", "Geografia", "Mateática", "Geográfia", "Inglês"],
+            'Quinta': ["Geográfia", "Espanhol", "Ciências", "Ciências", "Matemática", "Matemática"],
+            'Sexta': ["História", "Educação Fisíca", "Educação Fisíca", "Matemática", "Matemática", "Rec. Português"],
             'Sábado': [""],
         };
 
         function gerarCalendarioSemanal() {
             const calendarDiv = document.getElementById('calendar');
-            calendarDiv.innerHTML = ''; // Limpa o calendário anterior
+            calendarDiv.innerHTML = '';
 
             const primeiroDiaDaSemana = new Date(dataAtual);
-            primeiroDiaDaSemana.setDate(dataAtual.getDate() - dataAtual.getDay()); // Ajusta para o domingo da semana atual
+            primeiroDiaDaSemana.setDate(dataAtual.getDate() - dataAtual.getDay());
 
             document.getElementById('weekTitle').innerText = `${primeiroDiaDaSemana.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}`;
 
@@ -134,27 +146,31 @@
                 diaElemento.classList.add('day');
                 diaElemento.innerText = dia + ' ' + primeiroDiaDaSemana.getDate();
 
-                // Adiciona evento de clique para mostrar aulas
+                // Adiciona a classe "february" se for fevereiro
+                if (primeiroDiaDaSemana.getMonth() === 1) { // Fevereiro é o mês 1
+                    diaElemento.classList.add('february');
+                }
+
                 diaElemento.addEventListener('click', () => {
                     mostrarAulas(dia, primeiroDiaDaSemana);
                 });
 
                 calendarDiv.appendChild(diaElemento);
-                primeiroDiaDaSemana.setDate(primeiroDiaDaSemana.getDate() + 1); // Avança para o próximo dia
+                primeiroDiaDaSemana.setDate(primeiroDiaDaSemana.getDate() + 1);
             });
         }
 
         function gerarAulas(dia) {
             const aulas = [];
             const horaInicio = new Date();
-            horaInicio.setHours(13, 0, 0); // Início às 13h
+            horaInicio.setHours(13, 0, 0);
             const materias = materiasPorDia[dia] || [];
 
             for (let i = 0; i < materias.length; i++) {
                 aulas.push(`${horaInicio.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${materias[i]}`);
-                horaInicio.setMinutes(horaInicio.getMinutes() + 50); // Adiciona 50 minutos
+                horaInicio.setMinutes(horaInicio.getMinutes() + 50);
                 if (i === 2) {
-                    horaInicio.setMinutes(horaInicio.getMinutes() + 20); // Adiciona 20 minutos de intervalo após a 3ª aula
+                    horaInicio.setMinutes(horaInicio.getMinutes() + 20);
                 }
             }
             return aulas;
@@ -162,7 +178,7 @@
 
         function mostrarAulas(dia, data) {
             const aulasList = document.getElementById('aulasList');
-            aulasList.innerHTML = ''; // Limpa a lista anterior
+            aulasList.innerHTML = '';
             const aulas = gerarAulas(dia);
             aulas.forEach(aula => {
                 const aulaItem = document.createElement('div');
@@ -170,7 +186,7 @@
                 aulaItem.innerText = aula;
                 aulasList.appendChild(aulaItem);
             });
-            document.getElementById('aulasContainer').style.display = 'block'; // Mostra a área de aulas
+            document.getElementById('aulasContainer').style.display = 'block';
         }
 
         document.getElementById('prevWeek').addEventListener('click', () => {
@@ -183,34 +199,7 @@
             gerarCalendarioSemanal();
         });
 
-        gerarCalendarioSemanal(); // Gera o calendário ao carregar a página
-
-        document.getElementById("toggleMenu").addEventListener("click", function() {
-            var sidebar = document.querySelector(".sidebar");
-            var overlay = document.querySelector(".overlay"); // Seleciona a sobreposição
-            sidebar.classList.toggle("hidden");
-            overlay.classList.toggle("visible"); // Adiciona ou remove a classe visible
-        });
-        
-        // Fecha o menu e a sobreposição ao clicar na sobreposição
-        document.querySelector(".overlay").addEventListener("click", function() {
-            var sidebar = document.querySelector(".sidebar");
-            var overlay = document.querySelector(".overlay");
-            sidebar.classList.add("hidden");
-            overlay.classList.remove("visible"); // Remove a classe visible
-        });
-         // Registro do Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then((registration) => {
-                        console.log('Service Worker registrado com sucesso:', registration);
-                    })
-                    .catch((error) => {
-                        console.log('Falha ao registrar o Service Worker:', error);
-                    });
-            });
-        }
+        gerarCalendarioSemanal();
     </script>
 </body>
 </html>
