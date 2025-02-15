@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadro de Avisos</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px; /* Limita a largura máxima para telas grandes */
+            margin: auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: #007bff; /* Cor verde */
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px; /* Bordas arredondadas */
+        }
+        
+        main {
+            margin-top: 20px;
+        }
+        
+        .aviso {
+            background: #ffffff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px; /* Bordas arredondadas */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            transition: transform 0.2s; /* Efeito de transição */
+        }
+        
+        .aviso:hover {
+            transform: scale(1.02); /* Efeito de zoom ao passar o mouse */
+        }
+        
+        .aviso h2 {
+            margin: 0 0 10px;
+            font-size: 1.5em; /* Tamanho da fonte do título */
+            color: #333; /* Cor do texto */
+        }
+        
+        .aviso p {
+            margin: 0;
+            color: #666; /* Cor do texto da descrição */
+        }
+        
+        button {
+            width: 100%; /* Botão ocupa 100% da largura */
+            padding: 15px;
+            background: #007bff; /* Cor verde */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px; /* Bordas arredondadas */
+            cursor: pointer;
+            font-size: 1.2em; /* Tamanho da fonte do botão */
+            transition: background 0.3s; /* Efeito de transição */
+        }
+        
+        button:hover {
+            background: #007bff; /* Cor do botão ao passar o mouse */
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        
+            .book {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Quadro de Avisos</h1>
+        </header>
+        <main>
+            <div id="avisosContainer">
+                <!-- Avisos serão adicionados aqui -->
+                <div class="aviso">
+                    <h2>Título do Aviso 1</h2>
+                    <p>Descrição do aviso 1. Este é um exemplo de aviso que pode ser modificado diretamente no código.</p>
+                </div>
+                <div class="aviso">
+                    <h2>Título do Aviso 2</h2>
+                    <p>Descrição do aviso 2. Este é outro exemplo de aviso que pode ser modificado diretamente no código.</p>
+                </div>
+                <div class="aviso">
+                    <h2>Título do Aviso 3</h2>
+                    <p>Descrição do aviso 3. Você pode adicionar quantos avisos quiser aqui.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
