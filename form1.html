@@ -132,6 +132,39 @@
                 min-height: 10rem; /* Ajusta a altura mínima da textarea */
             }
         }
+        /* Estilos para o modo escuro */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #121212; /* Cor de fundo escura */
+        color: #ffffff; /* Cor do texto clara */
+    }
+
+    h1, h2 {
+        color: #ffffff; /* Títulos em branco */
+    }
+
+    .form {
+        background: #1e1e1e; /* Fundo do formulário escuro */
+        color: #ffffff; /* Texto do formulário em branco */
+    }
+
+    .form input,
+    .form textarea {
+        background: #333; /* Fundo dos inputs e textareas escuro */
+        color: #ffffff; /* Texto dos inputs e textareas em branco */
+        border: 1px solid #555; /* Borda mais clara */
+    }
+
+    .form button {
+        background: #0072c4; /* Cor do botão */
+        color: #ffffff; /* Texto do botão em branco */
+    }
+
+    .form button:hover,
+    .form button:focus {
+        background: #09d; /* Cor do botão ao passar o mouse */
+    }
+}
         </style>
 </head>
 <body>
