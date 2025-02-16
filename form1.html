@@ -141,19 +141,22 @@
     method="POST"
     class="form">
         <label for="name">Nome</label>
-        <input type="text" name="name" id="name" placeholder="juninho" required>
+        <input type="text" name="nome" id="name" placeholder="juninho" required>
 
         <label for="email">E-mail</label>
         <input type="email" name="email" id="email" placeholder="juninho@gmail.com" required>
 
         <label for="assunto">Assunto</label>
-        <input type="text" id="assunto" placeholder="Escreva o assunto aqui" required>
+        <input type="text" name="assunto" id="assunto" placeholder="Escreva o assunto aqui" required>
 
-        <label for="message">Menssagem</label>
-        <textarea name="message" placeholder="Escreva sua mensagem aqui" id="menssagem" required></textarea>
+        <label for="message">Mensagem</label>
+        <textarea name="mensagem" placeholder="Escreva sua mensagem aqui" id="menssagem" required></textarea>
 
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://programador-elite.github.io/9bcep/obrigado.html">
+        <input type="hidden" name="_subject" value="Novo envio!">
+        <input type="hidden" name="_autoresponse" value="Os representantes do 9B agradecem o envio do fomulário!">
+        <input type="hidden" name="_template" value="table">
 
         <button type="submit" id="button">Enviar</button>
    </form>
